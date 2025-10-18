@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "MJ_PlayerCharacter.generated.h"
 
+class USpringArmComponent;
+class UCameraComponent;
+
 UCLASS()
 class MEGAJAM2025_API AMJ_PlayerCharacter : public ACharacter
 {
@@ -18,6 +21,18 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(VisibleAnywhere)
+	USpringArmComponent* SpringArmComp;
+
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* CameraComp;
+
+	void MoveForward(float Value);
+	void MoveRight(float Value);
+
+	void Sprint();
+	void StopSprinting();
 
 public:	
 	// Called every frame
