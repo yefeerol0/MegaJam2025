@@ -22,16 +22,17 @@ AMJ_PlayerCharacter::AMJ_PlayerCharacter()
 void AMJ_PlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	TargetFOV = WalkFOV;
+	CameraComp->SetFieldOfView(WalkFOV);
 }
 
-// Called every frame
 void AMJ_PlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	CameraComp->FieldOfView = FMath::FInterpTo(CameraComp->FieldOfView, TargetFOV, DeltaTime, 5.0f);
 }
-
 void AMJ_PlayerCharacter::MoveForward(float Value)
 {
 	AddMovementInput(GetActorForwardVector(), Value);
@@ -45,11 +46,13 @@ void AMJ_PlayerCharacter::MoveRight(float Value)
 void AMJ_PlayerCharacter::Sprint()
 {
 	GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
+	TargetFOV = SprintFOV;
 }
 
 void AMJ_PlayerCharacter::StopSprinting()
 {
 	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+	TargetFOV = WalkFOV;
 }
 
 // Called to bind functionality to input

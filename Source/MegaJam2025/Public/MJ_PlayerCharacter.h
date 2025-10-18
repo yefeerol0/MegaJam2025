@@ -34,6 +34,15 @@ protected:
 	void Sprint();
 	void StopSprinting();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
+	float WalkFOV = 90.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
+	float SprintFOV = 100.0f;
+
+	float TargetFOV;
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
