@@ -4,7 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Components/TimelineComponent.h"
 #include "MJ_PlayerCharacter.generated.h"
+
+class USpringArmComponent;
+class UCameraComponent;
 
 UCLASS()
 class MEGAJAM2025_API AMJ_PlayerCharacter : public ACharacter
@@ -18,6 +22,39 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(VisibleAnywhere)
+	USpringArmComponent* SpringArmComp;
+
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* CameraComp;
+
+	void MoveForward(float Value);
+	void MoveRight(float Value);
+
+	void LookVertical(float Value);
+	void LookHorizontal(float Value);
+
+	void Sprint();
+	void StopSprinting();
+
+	void CharacterJump();
+
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
+	float WalkFOV = 90.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
+	float SprintFOV = 100.0f;
+
+	float TargetFOV;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Script")
+	void TurnOffScript();
+
+	UPROPERTY(BlueprintReadWrite, Category = "Script")
+	bool IsScriptOpen;
 
 public:	
 	// Called every frame
