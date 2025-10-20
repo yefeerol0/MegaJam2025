@@ -25,6 +25,8 @@ void AMJ_PlayerCharacter::BeginPlay()
 
 	TargetFOV = WalkFOV;
 	CameraComp->SetFieldOfView(WalkFOV);
+
+	IsScriptOpen = true;
 }
 
 void AMJ_PlayerCharacter::Tick(float DeltaTime)
@@ -35,24 +37,60 @@ void AMJ_PlayerCharacter::Tick(float DeltaTime)
 }
 void AMJ_PlayerCharacter::MoveForward(float Value)
 {
-	AddMovementInput(GetActorForwardVector(), Value);
+	if (!IsScriptOpen)
+	{
+		AddMovementInput(GetActorForwardVector(), Value);
+	}
 }
 
 void AMJ_PlayerCharacter::MoveRight(float Value)
 {
-	AddMovementInput(GetActorRightVector(), Value);
+	if (!IsScriptOpen)
+	{
+		AddMovementInput(GetActorRightVector(), Value);
+	}
+}
+
+void AMJ_PlayerCharacter::LookVertical(float Value)
+{
+	if (!IsScriptOpen)
+	{
+		AddControllerPitchInput(Value);
+	}
+}
+
+void AMJ_PlayerCharacter::LookHorizontal(float Value)
+{
+	if (!IsScriptOpen)
+	{
+		AddControllerYawInput(Value);
+	}
 }
 
 void AMJ_PlayerCharacter::Sprint()
 {
-	GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
-	TargetFOV = SprintFOV;
+	if (!IsScriptOpen)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
+		TargetFOV = SprintFOV;
+	}
 }
 
 void AMJ_PlayerCharacter::StopSprinting()
 {
-	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
-	TargetFOV = WalkFOV;
+	if (!IsScriptOpen)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+		TargetFOV = WalkFOV;
+	}
+}
+
+void AMJ_PlayerCharacter::CharacterJump()
+{
+	if (!IsScriptOpen)
+	{
+		Jump();
+	}
 }
 
 // Called to bind functionality to input
@@ -60,20 +98,23 @@ void AMJ_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+
 	// Walking
 	PlayerInputComponent->BindAxis("MoveForward", this, &AMJ_PlayerCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMJ_PlayerCharacter::MoveRight);
 
 	// Looking
-	PlayerInputComponent->BindAxis("TurnYaw", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("TurnPitch", this, &APawn::AddControllerPitchInput);
+	PlayerInputComponent->BindAxis("TurnYaw", this, &AMJ_PlayerCharacter::LookHorizontal);
+	PlayerInputComponent->BindAxis("TurnPitch", this, &AMJ_PlayerCharacter::LookVertical);
 
 	// Jumping
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMJ_PlayerCharacter::CharacterJump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	// Sprinting
 	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &AMJ_PlayerCharacter::Sprint);
 	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &AMJ_PlayerCharacter::StopSprinting);
-}
 
+	// Turning off Script Menu
+	PlayerInputComponent->BindAction("TurnOffScript", IE_Pressed, this, &AMJ_PlayerCharacter::TurnOffScript);
+}
