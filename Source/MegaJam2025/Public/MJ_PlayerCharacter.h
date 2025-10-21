@@ -23,11 +23,16 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// COMPONENTS
+
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArmComp;
 
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* CameraComp;
+
+
+	// MOVEMENT FUNCTIONS
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
@@ -40,7 +45,7 @@ protected:
 
 	void CharacterJump();
 
-
+	// MOVEMENT VARIABLES
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
 	float WalkFOV = 90.0f;
@@ -50,12 +55,14 @@ protected:
 
 	float TargetFOV;
 
+	// SCRIPT SYSTEM
+
 	UFUNCTION(BlueprintImplementableEvent, Category = "Script")
 	void TurnOffScript();
 
 	UPROPERTY(BlueprintReadWrite, Category = "Script")
 	bool IsScriptOpen;
-
+;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
