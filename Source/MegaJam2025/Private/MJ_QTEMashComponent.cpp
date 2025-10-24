@@ -1,17 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Kismet/GameplayStatics.h"
 #include "MJ_QTEMashComponent.h"
+#include "Kismet/GameplayStatics.h"
+
 
 // Sets default values for this component's properties
 UMJ_QTEMashComponent::UMJ_QTEMashComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-	PrimaryComponentTick.bStartWithTickEnabled = false; // Baþlangýçta Tick kapalý
+	PrimaryComponentTick.bStartWithTickEnabled = false; // Baï¿½langï¿½ï¿½ta Tick kapalï¿½
 	bIsQTEActive = false;
 	ProgressPerMash = 0.1f;
 	ProgressDecayRate = 0.05f;
-	QTELengthSeconds = 0.0f; // Zaman aþýmý yok
+	QTELengthSeconds = 0.0f; // Zaman aï¿½ï¿½mï¿½ yok
 	CurrentProgress = 0.0f;
 
 }
