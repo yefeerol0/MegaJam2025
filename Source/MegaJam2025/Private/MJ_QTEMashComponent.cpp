@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "Kismet/GameplayStatics.h"
 #include "MJ_QTEMashComponent.h"
 
 // Sets default values for this component's properties
@@ -78,6 +78,7 @@ void UMJ_QTEMashComponent::OnMashInput()
 	if (!bIsQTEActive) return;
 
 	CurrentProgress += ProgressPerMash;
+	UGameplayStatics::PlaySound2D(GetWorld(), QTESuccess, 0.5, 1.4, 0, NULL);
 	CurrentProgress = FMath::Clamp(CurrentProgress, 0.0f, 1.0f);
 
 	if (CurrentProgress >= 1.0f)

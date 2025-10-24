@@ -43,6 +43,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "QTE")
 	void StopQTE(bool bWasSuccessful);
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+	USoundWave* QTESuccess;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

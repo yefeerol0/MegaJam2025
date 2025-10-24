@@ -2,6 +2,7 @@
 
 
 #include "MJ_QTE_SkillCheckComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/InputComponent.h"
 
@@ -51,6 +52,7 @@ void UMJ_QTE_SkillCheckComponent::ReportSkillCheckResult(bool bWasSuccess)
 {
 	if (bWasSuccess)
 	{
+		UGameplayStatics::PlaySound2D(GetWorld(), QTESuccess, 0.7, 1, 0, NULL);
 		CurrentSuccessCount++;
 		if (CurrentSuccessCount >= SuccessesRequired)
 		{

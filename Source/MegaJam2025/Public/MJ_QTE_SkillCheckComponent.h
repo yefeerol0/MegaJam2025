@@ -40,6 +40,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SkillCheck")
 	void ReportSkillCheckResult(bool bWasSuccess);
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+	USoundWave* QTESuccess;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
